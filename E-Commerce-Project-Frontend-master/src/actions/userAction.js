@@ -23,20 +23,26 @@ export const logout = () => (dispatch) => {
   dispatch({ type: USER_DETAILS_RESET });
   dispatch({ type: USER_LOGOUT });
 };
+
 const baseUrl = "https://ecommerece-app-ashy.vercel.app/";
+
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: USER_LOGIN_REQUEST });
-    const config = { headers: { "Contnet-Type": "application/json" } };
+
+    const config = { headers: { "Content-Type": "application/json" } }; // Fixed typo
+
     const { data } = await axios.post(
-      `${baseUrl}/api/users/login`,
+      `${baseUrl}api/users/login`,
       { email, password },
       config
     );
+
     dispatch({
       type: USER_LOGIN_SUCCESS,
       payload: data,
     });
+
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({
@@ -52,20 +58,18 @@ export const login = (email, password) => async (dispatch) => {
 export const register = (name, email, password) => async (dispatch) => {
   try {
     dispatch({ type: USER_REGISTER_REQUEST });
-    const config = { headers: { "Contnet-Type": "application/json" } };
+
+    const config = { headers: { "Content-Type": "application/json" } }; // Fixed typo
+
     const { data } = await axios.post(
-      `${baseUrl}/api/users`,
+      `${baseUrl}api/users`, // Removed extra `/`
       { name, email, password },
       config
     );
-    dispatch({
-      type: USER_REGISTER_SUCCESS,
-      payload: data,
-    });
-    dispatch({
-      type: USER_LOGIN_SUCCESS,
-      payload: data,
-    });
+
+    dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
+    dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
+
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({
@@ -80,19 +84,20 @@ export const register = (name, email, password) => async (dispatch) => {
 
 export const getUserDetails = (id) => async (dispatch, getState) => {
   try {
-    dispatch({
-      type: USER_DETAILS_REQUEST,
-    });
+    dispatch({ type: USER_DETAILS_REQUEST });
+
     const {
       userLogin: { userInfo },
     } = getState();
+
     const config = {
       headers: {
-        "Contnet-Type": "application/json",
+        "Content-Type": "application/json", // Fixed typo
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.get(`${baseUrl}/api/users/${id}`, config);
+
+    const { data } = await axios.get(`${baseUrl}api/users/${id}`, config);
 
     dispatch({
       type: USER_DETAILS_SUCCESS,
@@ -111,23 +116,25 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 
 export const updateUserProfile = (user) => async (dispatch, getState) => {
   try {
-    dispatch({
-      type: USER_UPDATE_PROFILE_REQUEST,
-    });
+    dispatch({ type: USER_UPDATE_PROFILE_REQUEST });
+
     const {
       userLogin: { userInfo },
     } = getState();
+
     const config = {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
+
     const { data } = await axios.put(
-      `${baseUrl}api/users/profile`,
+      `${baseUrl}api/users/profile`, // Removed extra `/`
       user,
       config
     );
+
     dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
