@@ -12,10 +12,7 @@ const PORT = process.env.PORT || 8000;
 const app = express();
 app.use(express.json());
 
-app.use(cors({ origin: "http://localhost:3000", // Allow frontend
-  methods: "GET, POST, PUT, DELETE, OPTIONS", // Allow all needed methods
-  allowedHeaders: ["Content-Type", "Authorization"], // Allow these headers
-  credentials: true,}));
+app.use(cors("*"));
 // DataBase Connectioins
 MongoConnect();
 
