@@ -7,7 +7,7 @@ const footer = () => {
         <Container>
           <Row>
             <Col className="text-center">
-              <span>Copyright &copy; Shimiyon</span>
+              <span>Copyright &copy; KeerthanaDuraisamy</span>
             </Col>
           </Row>
         </Container>
