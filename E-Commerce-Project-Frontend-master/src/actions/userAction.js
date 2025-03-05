@@ -24,7 +24,7 @@ export const logout = () => (dispatch) => {
   dispatch({ type: USER_LOGOUT });
 };
 
-const baseUrl = "https://ecommerece-app-ashy.vercel.app/";
+const baseUrl = "https://ecommerece-app-ashy.vercel.app";
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -33,7 +33,7 @@ export const login = (email, password) => async (dispatch) => {
     const config = { headers: { "Content-Type": "application/json" } }; // Fixed typo
 
     const { data } = await axios.post(
-      `${baseUrl}api/users/login`,
+      `${baseUrl}/api/users/login`,
       { email, password },
       config
     );
@@ -62,7 +62,7 @@ export const register = (name, email, password) => async (dispatch) => {
     const config = { headers: { "Content-Type": "application/json" } }; // Fixed typo
 
     const { data } = await axios.post(
-      `${baseUrl}api/users`, // Removed extra `/`
+      `${baseUrl}/api/users`, // Removed extra `/`
       { name, email, password },
       config
     );
@@ -97,7 +97,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`${baseUrl}api/users/${id}`, config);
+    const { data } = await axios.get(`${baseUrl}/api/users/${id}`, config);
 
     dispatch({
       type: USER_DETAILS_SUCCESS,
@@ -130,7 +130,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `${baseUrl}api/users/profile`, // Removed extra `/`
+      `${baseUrl}/api/users/profile`, // Removed extra `/`
       user,
       config
     );
